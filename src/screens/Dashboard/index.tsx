@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { HightLightCard } from '../../components/HighlightCard';
 
 import { 
   Container,
@@ -29,8 +29,9 @@ export function Dashboard() {
           </UserInfo>
           <Icon name="power" />
         </UserWrapper>
-
       </Header>
+
+      <HightLightCard />
     </Container>
   );
 }
