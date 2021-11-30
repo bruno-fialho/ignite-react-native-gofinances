@@ -10,7 +10,7 @@ import {
   LastTransaction
 } from './styles';
 
-interface HightLightCardProps {
+interface HighLightCardProps {
   type: "up" | "down" | "total";
   title: string;
   amount: string;
@@ -23,12 +23,12 @@ const icon = {
   total: "dollar-sign",
 }
 
-export function HightLightCard({
+export function HighLightCard({
   type,
   title,
   amount,
   lastTransaction
-}: HightLightCardProps) {
+}: HighLightCardProps) {
   return (
     <Container type={type}>
       <Header>
