@@ -22,6 +22,8 @@ interface IAuthContextData {
   user: UserProps;
   signInWithGoogle(): Promise<void>;
   signInWithApple(): Promise<void>;
+  signOut(): Promise<void>;
+  userStorageLoading: boolean;
 }
 
 interface AuthorizationReponse {
@@ -79,18 +81,28 @@ function AuthProvider({ children }: AuthProviderProps) {
       });
 
       if (credential) {
+        const name = credential.fullName!.givenName!;
+        const photo = `https://ui-avatars.com/api/?name=${name}&length=1`;
+
         const userLogged = {
           id: String(credential.user),
           email: credential.email!,
-          name: credential.fullName!.givenName!,
+          name,
+          photo,
         };
 
         setUser(userLogged)
-        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
+        return await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
       }
     } catch (error) {
       throw new Error('Erro ao logar com a Apple');
     }
+  }
+
+  async function signOut() {
+    setUser({} as UserProps);
+
+    await AsyncStorage.removeItem(userStorageKey);
   }
 
   useEffect(() => {
@@ -113,7 +125,9 @@ function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider value={{
       user, 
       signInWithGoogle,
-      signInWithApple
+      signInWithApple,
+      signOut,
+      userStorageLoading
     }}>
       {children}
     </AuthContext.Provider>
