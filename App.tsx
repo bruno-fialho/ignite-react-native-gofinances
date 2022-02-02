@@ -5,7 +5,8 @@ import 'intl/locale-data/jsonp/pt-BR';
 import React from 'react';
 import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
-import { NavigationContainer } from '@react-navigation/native';
+
+import { Routes } from './src/routes';
 
 import { ThemeProvider } from 'styled-components';
 
@@ -18,9 +19,7 @@ import {
 
 import theme from './src/global/styles/theme'
 
-import { AppRoutes } from './src/routes/app.routes';
 import { AuthProvider } from './src/hooks/auth';
-import { SignIn } from './src/screens/SignIn';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -35,7 +34,6 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
         <StatusBar 
           barStyle="light-content" 
           backgroundColor="transparent"
@@ -43,9 +41,8 @@ export default function App() {
         />
 
         <AuthProvider>
-          <SignIn />
+          <Routes/>
         </AuthProvider>
-      </NavigationContainer>
     </ThemeProvider>
   );
-}
+};
